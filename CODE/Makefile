@@ -1,6 +1,6 @@
 #####   INTEL
 FC = ifort -g -C -r8 -g  -w -fpe0 -traceback -trapuv
-FC = ifort -O3 -r8 -g  -w -fpe0 -traceback -trapuv
+FC = ifort -O3 -r8 -g  -w -fpe1 -traceback -trapuv
 #COMP = 
 XTRALIB=
 ########   MacBook ##############
