@@ -1,0 +1,44 @@
+      integer nstep,nacc,nblock,ndim,nslices,nanal,nspill,iwrap,iwra
+      integer ikin,iepot,ietot,irg,ieff,igr,ln,nmovers,nrap,level,ntry
+      integer nalg,ntrial,iev,ntrydsp,naccdsp,nav,ipr(nhist)
+     .       ,ipi(nhist),icm,idel,iinst,idelhist,iinsthist,ievar
+     .       ,iepcor,iekcor,iepcor1,iekcor1,ix0xb2
+      integer nin,nout,nstart,irho1,ipd,nstdyn,model,nbeg,irho2
+      real*8 x(mdim,mslices),force(mdim,mslices),temp,beta,mratio
+      real*8 pi,spi,sq2pi,hop_hmc,vcl,hop_cm
+      real*8 hop,gammadsp,sigma2q(mslices)
+      real*8 amass,omega,alamb,tau,cke,sigma,sigmaq(mslices)
+      real*8 spring(mslices),rmax,rphist(5),pphist(5),pmax
+      real*8 rdelhist(5),rinsthist(5)
+      real*8 action,cpot,potpar,pimp(nhist)
+      real*8 av(mav),anorm(mav),avp(mav),anormp(mav)
+      real*8 xtoq(mslices,mslices),qtox(mslices,mslices)
+      real*4 tt,ttanal
+      character filen*14,title*80
+      logical ifex,rqmc
+      common/st/nslices,ndim,ln,nblock,nstep,nacc,nmovers,nrap,level
+     &         ,ntrial,ntry,nalg,ntrydsp,naccdsp,nin,nout,nstart
+     &         ,nstdyn,rqmc,model,nbeg
+      common/pos/x,force,xtoq,qtox,cke,sigmaq,sigma2q
+     &         ,sigma,action,cpot,potpar,hop_hmc,vcl,pimp,hop_cm
+     &         ,hop,gammadsp,rmax,rphist,pphist,pmax,rdelhist,rinsthist
+      common/ave/av,anorm,avp,anormp,tt,ttanal,ipr,ipi
+     &          ,ikin,iepot,ietot,irg,ieff,iev,nav,irho1,ipd,icm,irho2
+     &          ,nanal,nspill,idel,iinst,idelhist,iinsthist,ievar
+     &          ,iepcor,iekcor,iepcor1,iekcor1,ix0xb2,filen
+      common/pph/omega,beta,temp,tau,alamb,pi,amass
+     &         ,spi
+cpierleo 5.11.98: wigner dynamics
+      integer iwigner,ifwig,nwstep,iwaver,iwtot
+      real*8 hstep,sigmap,pw(mdim,2),fw(mdim,2),qw(mdim,2),totpot(2)
+      real*8 covarp,sigmapb,sigmaps,wt(2,2)
+      integer iwkin(2),iwpot(2),iwetot(2),iwtemp(2),iwcpp
+      real*8 cpp(0:mwstep),phip(nhist,nhist,4,2)
+      real*8 et(0:mwstep,2),ekin(0:mwstep,2),epot(0:mwstep,2)
+      real*8 wtemp(0:mwstep,2),pgrid(nhist),qgrid(nhist)
+      common/engine11/iwigner,ifwig,nwstep,iwaver,hstep,sigmap
+     &               ,sigmapb,sigmaps,covarp,pw,fw,qw,cpp 
+      common/wig/iwkin,iwpot,iwtot,iwtemp,iwcpp,phip
+     &          ,et,ekin,epot,wtemp,totpot,qgrid,pgrid,wt
+c
+      iwrap(iwra)=1+mod(iwra+nslices-1,nslices)

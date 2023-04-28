@@ -1,0 +1,65 @@
+##############SYSTEM PARAMETERS  ############
+ndim     mass      hbaromega     model    temp    nslices
+ 1        1.          1.0         1        1.0       16
+#############   SIMULATION PARAMETERS   ###############
+  nblock      nstep      nstart  nmovers   nanal   nbeg
+  5           100            0      14        5     0
+  nalg    nspill      hop      hop_cm    gammadsp
+   0      50000000    0.5       0.5        0.5
+  hop_hmc   nstdyn
+  15.        200
+  iwig    whstep     nwstep     iwave   sigmap  covarp
+   0       0.01       100         2       1.     0.
+############    POST ANALYSIS   #####################
+   level
+   1
+
+## legenda:
+mass = mass of the particle
+omega = phonon frequency (hbaromega)
+model = 1/2 [1=HO, 2=DW]
+temp = temperature/hbaromega
+nslices = number of time slices  (nslices/2==0 PIMC, nslices/2/=0 RQMC]
+nblock = number of blocks for statistics
+nstep = number of steps per block
+nstart = flag to decide the way to start
+         the code inquires the existence of a file qid.rs, if it exists
+	 the positions of time slices are read from that file, otherwise
+	 they are generated randomly around the origin.
+	0 : start from scratch (as explained above)
+	1 : continue a previous run, read positions and cumulators in qid.rs
+       -1 : reanalize a previously saved set of configurations (qid.pc)
+nmovers = numbers of time slices moved in a single MC attempt. 
+nanal = calling frequency of analisys in step units
+nbeg = initial block for cumulators
+nalg = choose the MC algorithm to be used
+      PIMC:
+	0 : driver LEVY bisectes a nmovers imaginary time interval by free propagator
+        3 : driver FPIMC local moves of normal modes
+	4 : driver SMC Smart MC in the direct space
+	5 : driver MC normal MC with gaussian displacement
+	6 : driver SMC_NM Smart MC in the normal mode space
+      RQMC:
+	0 : driver REPTATE 
+	1 : drive BOUNCE
+nspill = frequency in steps of dumping confs. in file qid.pc
+hop = maximum displacement for the single slice move
+hop_cm = maximum displacement for the DISPLACE move
+gammadsp = frequency of attempting the DISPLACE moves
+hop_hmc = maximum displacement for the Hybrid_MC driver (not used)
+nstdyn = number of steps of dynamics between Metrpoli tests in Hybrid_MC (not used)
+iwigner = flag for activating Wigner dynamics [0=no, 1=yes]
+whstep = time step for Wigner dynamics
+nwsteps = number of steps of W dyn
+iwave = ???
+sigmap = ???
+covarp = ???
+level = new level for post analysis
+
+
+################## ADDENDUM ##################  : 
+#  required for GS-QMC calculations of the harmonic oscillator assuming a guassian trial function. 
+#  The next 2 lines should appear before the simulation parameters.
+#
+#  Variance of the trial function
+   1.0

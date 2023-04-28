@@ -1,0 +1,5 @@
+        integer mslices,mdim,mav,mmovers,nhist,mwstep
+        parameter(mslices=200,mmovers=mslices)
+        parameter(mdim=1,nhist=300)
+        parameter(mav=2*mslices+2*nhist+4*nhist*nhist+200)
+        parameter(mwstep=1)
